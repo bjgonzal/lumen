@@ -1,13 +1,5 @@
 //
 //  LumenTabView.swift
-//  Lumēn
-//
-//  Created by Brian J Gonzalez on 10/22/25.
-//
-
-
-//
-//  LumenTabView.swift
 //  Lūmen
 //
 //  Created by Brian J Gonzalez on 10/22/25.
@@ -28,6 +20,12 @@ struct LumenTabView: View {
                 .environmentObject(store)
                 .tabItem {
                     Label("Feed", systemImage: "sparkles")
+                }
+
+            // Lumēn Guide Tab
+            ChatbotView()
+                .tabItem {
+                    Label("Guide", systemImage: "message.circle")
                 }
 
             // Profile Tab
