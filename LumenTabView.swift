@@ -18,11 +18,13 @@ import SwiftUI
 struct LumenTabView: View {
     @EnvironmentObject var store: InsightStore
     @EnvironmentObject var profileStore: ProfileStore
+    @StateObject private var feedViewModel = FeedViewModel()
 
     var body: some View {
         TabView {
             // Feed Tab
             FeedView()
+                .environmentObject(feedViewModel)
                 .environmentObject(store)
                 .tabItem {
                     Label("Feed", systemImage: "sparkles")
@@ -36,5 +38,7 @@ struct LumenTabView: View {
                 }
         }
         .tint(.black) // matches your Lūmen brand tone
+        .background(Color.clear)
+        .lumenBackground()
     }
 }
