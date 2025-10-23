@@ -3,6 +3,8 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 20) {
+            LumenLogo()
+
             Text("🌕 Lūmen")
                 .font(.largeTitle)
                 .fontWeight(.bold)
