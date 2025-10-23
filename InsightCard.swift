@@ -2,6 +2,7 @@ import SwiftUI
 
 struct InsightCard: View {
     let insight: Insight
+    @EnvironmentObject private var theme: LumenThemeManager
     @State private var isGlowing = false
 
     var body: some View {
@@ -20,10 +21,7 @@ struct InsightCard: View {
         .background(
             ZStack {
                 LinearGradient(
-                    colors: [
-                        Color.white.opacity(0.25),
-                        Color.white.opacity(0.1)
-                    ],
+                    colors: gradientColors,
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -32,7 +30,11 @@ struct InsightCard: View {
             }
         )
         .cornerRadius(24)
-        .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .strokeBorder(accentStrokeColor, lineWidth: 1)
+        )
+        .shadow(color: shadowColor, radius: 10, x: 0, y: 6)
         .padding(.horizontal)
         .parallax(amount: 4)
         .glassGlow(active: $isGlowing) // 👈 applies the glow modifier
@@ -44,6 +46,37 @@ struct InsightCard: View {
             }
         }
     }
+}
+
+private extension InsightCard {
+    var gradientColors: [Color] {
+        let palette = theme.colors
+        let first = palette.first ?? Color.white
+        let last = palette.last ?? Color.white
+
+        return [first.opacity(0.35), last.opacity(0.18)]
+    }
+
+    var accentStrokeColor: Color {
+        (theme.colors.first ?? Color.white).opacity(0.28)
+    }
+
+    var shadowColor: Color {
+        (theme.colors.last ?? Color.black).opacity(0.14)
+    }
+}
+
+#Preview {
+    InsightCard(
+        insight: Insight(
+            id: UUID(),
+            author: "Preview",
+            text: "Lūmen listens before it illuminates.",
+            date: Date(),
+            isFavorite: false
+        )
+    )
+    .environmentObject(LumenThemeManager())
 }
 
 
